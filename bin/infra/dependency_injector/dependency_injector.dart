@@ -3,40 +3,38 @@ typedef InstanceCreator<T> = T Function();
 class DependencyInjector {
   DependencyInjector._();
   static final _singleton = DependencyInjector._();
-
   factory DependencyInjector() => _singleton;
 
   final _instanceMap = <Type, _InstanceGenerator<Object>>{};
 
-  //register intances
-  void register<T extends Object>(InstanceCreator<T> instance,
-          {bool isSingleton = true}) =>
+  void register<T extends Object>(
+    InstanceCreator<T> instance, {
+    bool isSingleton = true,
+  }) =>
       _instanceMap[T] = _InstanceGenerator(instance, isSingleton);
-  //get instances
+
   T get<T extends Object>() {
     final instance = _instanceMap[T]?.getInstance();
-
     if (instance != null && instance is T) return instance;
-    throw Exception("[ERROR] -> Instance ${T.toString()} not found");
+    throw Exception('[ERROR] -> Instance ${T.toString()} not found');
   }
 
-  call<T extends Object>() => get();
+  call<T extends Object>() => get<T>();
 }
 
 class _InstanceGenerator<T> {
   T? _instance;
-  bool _isFirtsGet = false;
+  bool _isFirstGet = false;
 
   final InstanceCreator<T> _instanceCreator;
   _InstanceGenerator(this._instanceCreator, bool isSingleton)
-      : _isFirtsGet = isSingleton;
+      : _isFirstGet = isSingleton;
 
   T? getInstance() {
-    if (_isFirtsGet) {
+    if (_isFirstGet) {
       _instance = _instanceCreator();
-      _isFirtsGet = false;
+      _isFirstGet = false;
     }
-
     return _instance ?? _instanceCreator();
   }
 }
