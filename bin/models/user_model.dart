@@ -1,12 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
-  final int id;
-  final String name;
-  final String email;
-  final bool isActived;
-  final DateTime dtCreated;
-  final DateTime dtUpdated;
-  UserModel({
+  int? id;
+  String? name;
+  String? email;
+  String? password;
+  bool? isActived;
+  DateTime? dtCreated;
+  DateTime? dtUpdated;
+
+  UserModel();
+  UserModel.create({
     required this.id,
     required this.name,
     required this.email,
@@ -16,7 +18,7 @@ class UserModel {
   });
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
+    return UserModel.create(
       id: map['id'] as int,
       name: map['nome'] as String,
       email: map['email'] as String,

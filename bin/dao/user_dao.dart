@@ -22,7 +22,7 @@ class UserDao implements Dao<UserModel> {
 
   @override
   Future<UserModel> findOne(int id) async {
-    final String sql = 'SELECT FROM usuarios WHERE id=?';
+    final String sql = 'SELECT * FROM usuarios where id = ?';
     var connection = await _dbConfiguration.connection;
     var result = await connection.query(sql, [id]);
     if (result.length <= 0) {
@@ -32,17 +32,34 @@ class UserDao implements Dao<UserModel> {
   }
 
   @override
-  Future create(UserModel value) {
-    throw UnimplementedError();
+  Future create(UserModel value) async {
+    final String sql =
+        'INSERT INTO usuarios (nome, email, password) VALUES (?, ?, ?);';
+    var connection = await _dbConfiguration.connection;
+    var result = await connection.query(
+      sql,
+      [value.name, value.email, value.password],
+    );
+    return result.affectedRows > 0;
   }
 
   @override
-  Future<UserModel> delete(int id) {
-    throw UnimplementedError();
+  Future update(UserModel value) async {
+    final String sql =
+        'UPDATE usuarios set nome = ?, password = ? where id = ?;';
+    var connection = await _dbConfiguration.connection;
+    var result = await connection.query(
+      sql,
+      [value.name, value.password, value.id],
+    );
+    return result.affectedRows > 0;
   }
 
   @override
-  Future update(UserModel value) {
-    throw UnimplementedError();
+  Future<UserModel> delete(int id) async {
+    final String sql = 'DELETE FROM usuarios WHERE id = ?;';
+    var connection = await _dbConfiguration.connection;
+    var result = await connection.query(sql, [id]);
+    return result.affectedRows > 0;
   }
 }

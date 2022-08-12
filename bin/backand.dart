@@ -12,9 +12,8 @@ import 'utils/custom_env.dart';
 void main() async {
   final di = Injects.initialize();
 
-  UserDao userDao = UserDao(di<DBConfiguration>());
+  // UserDao userDao = UserDao(di<DBConfiguration>());
 
-  print(await userDao.findOne(1));
   var cascadeHandler = Cascade()
       .add(di<LoginApi>().getHandler())
       .add(di<BlogApi>().getHandler(isSecurity: true))
