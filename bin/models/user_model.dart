@@ -1,5 +1,3 @@
-import '../api/api.dart';
-
 class UserModel {
   int? id;
   String? name;
@@ -28,6 +26,12 @@ class UserModel {
       dtCreated: map['dt_criacao'],
       dtUpdated: map['dt_autalizacao'],
     );
+  }
+
+  factory UserModel.fromEmail(Map map) {
+    return UserModel()
+      ..id = map['id']?.toInt()
+      ..password = map['password'];
   }
 
   factory UserModel.fromRequest(Map map) {

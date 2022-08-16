@@ -1,6 +1,6 @@
 import 'package:shelf/shelf.dart';
 
-import 'api/blog_api.dart';
+
 import 'api/login_api.dart';
 import 'api/user_api.dart';
 import 'infra/custom_server.dart';
@@ -13,8 +13,7 @@ void main() async {
 
   var cascadeHandler = Cascade()
       .add(di<LoginApi>().getHandler())
-      .add(di<BlogApi>().getHandler(isSecurity: true))
-      .add(di.get<UserApi>().getHandler(isSecurity: true))
+      .add(di<UserApi>().getHandler(isSecurity: true))
       .handler;
   var handler = Pipeline()
       .addMiddleware(logRequests())

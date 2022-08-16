@@ -28,4 +28,7 @@ class UserService implements GenericService<UserModel> {
 
   @override
   Future<UserModel?> findOne(int id) async => _userDao.findOne(id);
+
+  Future<UserModel?> findByEmail(String email) async =>
+      _userDao.findByEmail(email);
 }
