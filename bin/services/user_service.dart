@@ -17,7 +17,7 @@ class UserService implements GenericService<UserModel> {
 
   @override
   Future<bool> save(UserModel value) async {
-    if ((value.id != null)) {
+    if (value.id != null) {
       return _userDao.update(value);
     } else {
       final hash = Password.hash(value.password!, PBKDF2());

@@ -1,38 +1,27 @@
+import '../dao/noticias_dao.dart';
 import '../models/noticia_model.dart';
-import '../utils/list_extension.dart';
 import 'generic_service.dart';
 
 class NoticiaService implements GenericService<NoticiaModel> {
-  final List<NoticiaModel> _fakeDB = [];
+  final NoticiasDao _noticiasDao;
+
+  NoticiaService(this._noticiasDao);
 
   @override
-  Future<bool> delete(int id) async {
-    _fakeDB.removeWhere((element) => element.id == id);
-    return true;
-  }
+  Future<bool> delete(int id) async => _noticiasDao.delete(id);
 
   @override
-  Future<List<NoticiaModel>> findAll() async {
-    return _fakeDB;
-  }
+  Future<List<NoticiaModel>> findAll() async => _noticiasDao.findAll();
 
   @override
-  Future<NoticiaModel> findOne(int id) async {
-    return _fakeDB.firstWhere((element) => element.id == id);
-  }
+  Future<NoticiaModel?> findOne(int id) async => _noticiasDao.findOne(id);
 
   @override
   Future<bool> save(NoticiaModel value) async {
-    NoticiaModel? model =
-        _fakeDB.firstWhereOrNull((element) => element.id == value.id);
-
-    if (model == null) {
-      _fakeDB.add(value);
+    if (value.id != null) {
+      return _noticiasDao.update(value);
     } else {
-      var index = _fakeDB.indexOf(model);
-      _fakeDB[index] = value;
+      return _noticiasDao.create(value);
     }
-
-    return true;
   }
 }

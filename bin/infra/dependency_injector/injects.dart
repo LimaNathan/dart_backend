@@ -1,6 +1,7 @@
-import '../../api/blog_api.dart';
+import '../../api/noticias_api.dart';
 import '../../api/login_api.dart';
 import '../../api/user_api.dart';
+import '../../dao/noticias_dao.dart';
 import '../../dao/user_dao.dart';
 import '../../models/noticia_model.dart';
 import '../../services/generic_service.dart';
@@ -17,15 +18,29 @@ class Injects {
   static DependencyInjector initialize() {
     var di = DependencyInjector();
 
-    ///Classe para injetar as dependencias, seguindo o conceito de DIP so SOLID
+    ///
+    /// Classe para injetar as dependencias, seguindo o conceito de DIP so SOLID
+    ///
 
+    ///Banco de dados
     di.register<DBConfiguration>(() => MysqlDbConfiguration());
+
+    ///Seguranca
     di.register<SecurityService>(() => SecurityServiceImp());
-    di.register<GenericService<NoticiaModel>>(() => NoticiaService());
-    di.register<BlogApi>(() => BlogApi(di()));
+
+    ///Noticias
+    di.register<NoticiasDao>(() => NoticiasDao(di<DBConfiguration>()));
+    di.register<GenericService<NoticiaModel>>(
+        () => NoticiaService(di<NoticiasDao>()));
+    di.register<NoticiasAPI>(
+        () => NoticiasAPI(di<GenericService<NoticiaModel>>()));
+
+    ///Usuario
     di.register<UserDao>(() => UserDao(di<DBConfiguration>()));
     di.register<UserService>(() => UserService(di<UserDao>()));
     di.register<UserApi>(() => UserApi(di<UserService>()));
+
+    ///Login
     di.register<LoginService>(() => LoginService(di<UserService>()));
     di.register<LoginApi>(
       () => LoginApi(di<SecurityService>(), di<LoginService>()),

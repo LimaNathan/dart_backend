@@ -14,15 +14,9 @@ class LoginApi extends Api {
   LoginApi(this._securityService, this._loginService);
 
   @override
-  Handler getHandler({
-    List<Middleware>? middlewares,
-    bool isSecurity = false,
-  }) {
+  Handler getHandler({List<Middleware>? middlewares, bool isSecurity = false}) {
     Router router = Router();
     router.post('/login', (Request req) async {
-      // var token = await _securityService.generateJWT("1");
-      // await _securityService.validateJWT(token);
-
       var body = await req.readAsString();
       var authTO = AuthTO.fromRequest(body);
 
@@ -30,14 +24,10 @@ class LoginApi extends Api {
 
       if (userID > 0) {
         var jwt = await _securityService.generateJWT(userID.toString());
-        return Response.ok(jsonEncode(
-          {'token': jwt},
-        ));
+        return Response.ok(jsonEncode({'token': jwt}));
       } else {
         return Response(401);
       }
-
-      return Response.ok(200);
     });
     return createHandler(
       router: router,
