@@ -1,3 +1,5 @@
+import '../api/api.dart';
+
 class UserModel {
   int? id;
   String? name;
@@ -26,6 +28,13 @@ class UserModel {
       dtCreated: map['dt_criacao'],
       dtUpdated: map['dt_autalizacao'],
     );
+  }
+
+  factory UserModel.fromRequest(Map map) {
+    return UserModel()
+      ..name = map['name']
+      ..email = map['email']
+      ..password = map['password'];
   }
 
   @override
