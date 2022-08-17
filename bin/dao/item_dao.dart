@@ -42,7 +42,7 @@ class ItemDao extends Dao<ItemModel> {
   Future<bool> update(ItemModel value)async {
     var result = await _dbConfiguration.execQuery(
       'update itens set title = ?, is_active = ? where id = ?',
-      [value.title, value.isActive, value.id],
+      [value.title, value.isActive! ? 1 : 0, value.id],
     );
     return result.affectedRows > 0;
   }
