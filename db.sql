@@ -16,3 +16,6 @@ CREATE TABLE IF NOT EXISTS `cautela`.`itens` (
   `is_active` TINYINT NULL DEFAULT 1,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+
+
+INSERT INTO `itens` (title, is_active) VALUES ('Notebook', 1);
