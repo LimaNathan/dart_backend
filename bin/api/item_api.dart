@@ -35,8 +35,9 @@ class ItemApi extends Api {
     ///Novo item na tabela
     router.post('/item-add', (Request req) async {
       var body = await req.readAsString();
-      var result = await _service.save(ItemModel.fromRequest(jsonDecode(body)));
-      return result ? Response(201) : Response(500);
+      ItemModel savedItem = ItemModel.fromRequest(jsonDecode(body));
+      var result = await _service.save(savedItem);
+      return result ? Response(201, body: savedItem) : Response(500);
     });
 
     ///Atualizar um item na tabela
@@ -49,7 +50,7 @@ class ItemApi extends Api {
 
     ///Deletar um item na tabela
     router.delete('/item-delete', (Request req) async {
-     String? id = req.url.queryParameters['id'];
+      String? id = req.url.queryParameters['id'];
       if (id == null) return Response(400);
       var result = await _service.delete(int.parse(id));
       return result ? Response(200) : Response.internalServerError();
