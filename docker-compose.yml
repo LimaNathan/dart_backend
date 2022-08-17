@@ -6,10 +6,10 @@ services:
     container_name: mysql
     restart: always
     environment:
-      MYSQL_DATABASE: 'dart'   
-      MYSQL_USER: 'dart_user'
-      MYSQL_PASSWORD: 'dart_pass'      
-      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'cautela'   
+      MYSQL_USER: 'mysql_root'
+      MYSQL_PASSWORD: 'cautela2022'      
+      MYSQL_ROOT_PASSWORD: 'toor'
     ports:
       - '3306:3306'
     expose:
