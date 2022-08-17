@@ -31,6 +31,13 @@ class UserApi extends Api {
       //checa se a açao de salvar o usuario deu certo, casso nao ERRO -> 500
       return result ? Response(201) : Response(500);
     });
+
+    router.get('/users', (Request req) async {
+      List<UserModel> users = await userService.findAll();
+      List<Map> usersMap = users.map((e) => e.toJson()).toList();
+
+      return Response.ok(jsonEncode(usersMap));
+    });
     return createHandler(router: router);
   }
 }

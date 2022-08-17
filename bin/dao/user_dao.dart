@@ -28,8 +28,8 @@ class UserDao implements Dao<UserModel> {
   @override
   Future<bool> create(UserModel value) async {
     var result = await _dbConfiguration.execQuery(
-      'INSERT INTO usuarios (nome, email, password) VALUES (?, ?, ?);',
-      [value.name, value.email, value.password],
+      'INSERT INTO usuarios (name, password) VALUES (?, ?);',
+      [value.name, value.password],
     );
     return result.affectedRows > 0;
   }
