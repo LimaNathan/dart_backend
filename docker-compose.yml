@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: 'cautela'   
-      MYSQL_USER: 'mysql_root'
+      MYSQL_USER: 'root'
       MYSQL_PASSWORD: 'cautela2022'      
       MYSQL_ROOT_PASSWORD: 'toor'
     ports:
